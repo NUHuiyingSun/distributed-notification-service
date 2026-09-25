@@ -1,5 +1,5 @@
 # Builds any one service of the reactor:  docker build --build-arg MODULE=notification-worker .
-FROM maven:3.9-eclipse-temurin-17 AS build
+FROM maven:3-eclipse-temurin-26 AS build
 WORKDIR /src
 COPY . .
 ARG MODULE
