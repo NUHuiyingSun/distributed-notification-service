@@ -1,0 +1,46 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: notification-worker
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  cloud:
+    aws:
+      region:
+        static: us-east-1
+      credentials:
+        access-key: test
+        secret-key: test
+      endpoint: ${AWS_ENDPOINT:http://localhost:4566}
+      sqs:
+        listener:
+          max-concurrent-messages: 10
+          max-messages-per-poll: 10
+
+app:
+  worker:
+    max-receive-count: 3            # must equal RedrivePolicy.maxReceiveCount in localstack/init-aws.sh
+    backoff-base: 2s
+    backoff-max: 60s
+    lease-ttl: 60s
+    delivered-ttl: 7d
+    in-progress-retry-delay: 5s
+    simulated-failure-rate: ${SIMULATED_FAILURE_RATE:0.2}
+    queues:
+      EMAIL: notification-email-queue
+      SMS: notification-sms-queue
+      PUSH: notification-push-queue
+    dead-letter-queues:
+      EMAIL: notification-email-dlq
+      SMS: notification-sms-dlq
+      PUSH: notification-push-dlq
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
