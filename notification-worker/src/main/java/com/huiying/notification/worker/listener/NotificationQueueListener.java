@@ -61,7 +61,18 @@ public class NotificationQueueListener {
 
     @SqsListener({"${app.worker.queues.EMAIL}", "${app.worker.queues.SMS}", "${app.worker.queues.PUSH}"})
     public void onMessage(Message<String> message, Visibility visibility) {
-        handle(message.getPayload(), receiveCount(message), visibility);
+        try {
+            handle(message.getPayload(), receiveCount(message), visibility);
+        } catch (DeliveryFailedException ex) {
+            // Expected failure path, already logged concisely in handle/deliver. Rethrow so the
+            // message is not acknowledged and SQS redelivers it (or moves it to the DLQ).
+            throw ex;
+        } catch (RuntimeException ex) {
+            // Unexpected failure (e.g. Redis unavailable, a bug). Log the full stack trace here,
+            // because the framework's own per-message error log is silenced in application.yml.
+            log.error("Unexpected error while processing SQS message {}", message.getHeaders().getId(), ex);
+            throw ex;
+        }
     }
 
     /** Package-private entry point so the full decision logic can be unit tested without SQS. */

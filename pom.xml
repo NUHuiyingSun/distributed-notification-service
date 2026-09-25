@@ -29,6 +29,37 @@
         <spring-cloud-aws.version>3.2.1</spring-cloud-aws.version>
     </properties>
 
+    <build>
+        <plugins>
+            <!-- Fail fast with a clear message on unsupported JDKs. Mockito/Byte Buddy in
+                 Spring Boot 3.3 cannot instrument classes on JDK 24+, which otherwise shows up
+                 as confusing "Mockito cannot mock this class" test errors. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[17,24)</version>
+                                    <message>This project requires JDK 17-23 (found ${java.version}). Set JAVA_HOME to a JDK 17 or 21 installation.</message>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>[3.9,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

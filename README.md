@@ -57,7 +57,10 @@ See **[docs/DESIGN.md](docs/DESIGN.md)** for the full design and
 
 ## Quick start
 
-**Prerequisites:** Docker with Compose v2. For local development also JDK 17+, Maven 3.9+ and `jq`.
+**Prerequisites:** Docker with Compose v2. For local development also JDK 17 or 21 (JDK 24+ is not supported by the test tooling), Maven 3.9+ and `jq`.
+
+> macOS/Homebrew tip: `brew install maven` pulls in the newest JDK. Point Maven at JDK 17 with
+> `export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home` and check `mvn -version`.
 
 ### Option A — everything in Docker
 

@@ -44,3 +44,11 @@ management:
     web:
       exposure:
         include: health,info,metrics
+
+logging:
+  level:
+    # Every failed attempt is thrown back to Spring Cloud AWS so the message stays on the queue.
+    # The framework then logs a full stack trace at ERROR for each attempt, duplicating the concise
+    # line NotificationQueueListener already writes. Unexpected errors are still logged with stack
+    # traces by NotificationQueueListener.onMessage.
+    io.awspring.cloud.sqs.listener.sink.AbstractMessageProcessingPipelineSink: "OFF"
