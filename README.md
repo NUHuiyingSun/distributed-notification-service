@@ -1,6 +1,6 @@
 # Distributed Notification Service
 
-[![CI](https://github.com/YOUR_GITHUB_USERNAME/distributed-notification-service/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/distributed-notification-service/actions/workflows/ci.yml)
+[![CI](https://github.com/Ada-Sun27/distributed-notification-service/actions/workflows/ci.yml/badge.svg)](https://github.com/Ada-Sun27/distributed-notification-service/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Java 17](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot 3.3](https://img.shields.io/badge/Spring%20Boot-3.3-6DB33F)
@@ -65,7 +65,7 @@ See **[docs/DESIGN.md](docs/DESIGN.md)** for the full design and
 ### Option A — everything in Docker
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/distributed-notification-service.git
+git clone https://github.com/Ada-Sun27/distributed-notification-service.git
 cd distributed-notification-service
 SIMULATED_FAILURE_RATE=0 docker compose --profile apps up -d --build --wait
 ./scripts/e2e-test.sh
