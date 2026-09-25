@@ -5,7 +5,7 @@ COPY . .
 ARG MODULE
 RUN mvn -B -ntp -pl ${MODULE} -am -DskipTests package
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 ARG MODULE
 RUN addgroup -S app && adduser -S app -G app
 WORKDIR /app
